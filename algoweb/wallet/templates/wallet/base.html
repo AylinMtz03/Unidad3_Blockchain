@@ -1,0 +1,58 @@
+*<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Panel Algorand{% endblock %}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f9fc;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #00a3e0;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      padding: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  {% if user.is_authenticated %}
+  <header>
+    <div>
+      <strong>Algorand Wallet</strong>
+    </div>
+    <nav>
+      <a href="{% url 'mi_wallet' %}">Mi Wallet</a>
+      <a href="{% url 'envio' %}">Envios</a>
+      <a href="{% url 'transacciones' %}">Transacciones</a>
+      <a href="{% url 'registrar_wallet' %}">Registrar Wallet</a>
+      <a href="{% url 'logout' %}">Cerrar sesión</a>
+    </nav>
+  </header>
+  {% endif %}
+
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+</body>
+</html>*

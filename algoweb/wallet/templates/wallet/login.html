@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Algorand App</title>
+  <style>
+    body {
+      background: #f4f7f9;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 120px;
+    }
+    .card {
+      background: white;
+      display: inline-block;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: left;
+    }
+    h2 {
+      text-align: center;
+      color: #00a3e0;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #00a3e0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover { background: #007bbd; }
+    .error {
+      color: red;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Iniciar sesión</h2>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="POST">
+      {% csrf_token %}
+      <label>Usuario</label>
+      <input type="text" name="username" required>
+      <label>Contraseña</label>
+      <input type="password" name="password" required>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% extends 'wallet/base.html' %}
+
+{% block title %}Mi Wallet{% endblock %}
+
+{% block content %}
+
+  <div class="card">
+    <h2>Consulta tu saldo (Algorand TestNet)</h2>
+    <input type="text" id="address" placeholder="Dirección de Algorand">
+    <br>
+    <button onclick="consultar()">Consultar</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function consultar() {
+      const address = document.getElementById('address').value.trim();
+      if (!address) return alert("Introduce una dirección");
+
+      document.getElementById('result').innerText = "Consultando...";
+
+      const response = await fetch(`/get_balance/?address=${address}`);
+      const data = await response.json();
+
+      if (data.error) {
+        document.getElementById('result').innerText = "Error: " + data.error;
+      } else {
+        document.getElementById('result').innerText = 
+          `Saldo: ${data.balance} ALGOs`;
+      }
+    }
+  </script>
+
+{% endblock %}

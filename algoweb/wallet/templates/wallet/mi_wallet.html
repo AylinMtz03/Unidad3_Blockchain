@@ -1,0 +1,11 @@
+{% extends 'wallet/base.html' %}
+
+{% block title %}Mi Wallet{% endblock %}
+
+{% block content %}
+
+<h2>Bienvenido, {{ user.username }}</h2>
+<p><strong>Dirección:</strong> {{ address }}</p>
+<p><strong>Balance:</strong> {{ balance }} Algos</p>
+<p><strong>Activos:</strong> {{ txs }}</p>
+{% endblock %}
