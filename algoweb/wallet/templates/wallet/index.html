@@ -3,68 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <title>Consulta de saldo - Algorand</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { 
-      font-family: Arial; 
-      background: #f0f2f5; 
-      text-align: center; 
-      margin-top: 100px;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding-top: 80px;
     }
     .card {
-      background: white; 
-      padding: 20px; 
+      background: white;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      display: inline-block;
-      width: 300px;
+      max-width: 400px;
+      margin: auto;
     }
-    input {
-      width: 90%;
-      padding: 8px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
     }
-    button {
-      background: #00a3e0; 
-      color: white; 
-      border: none; 
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #007bbd;
-    }
-    #result { margin-top: 20px; font-size: 18px; }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2>Consulta tu saldo (Algorand TestNet)</h2>
-    <input type="text" id="address" placeholder="Dirección de Algorand">
-    <br>
-    <button onclick="consultar()">Consultar</button>
-    <div id="result"></div>
-  </div>
+  <!-- Barra de navegación -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">AlgorandApp</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Consulta</a></li>
+          <li class="nav-item"><a class="nav-link" href="#info">Info</a></li>
+          <li class="nav-item"><a class="nav-link" href="#envios">Envíos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sección: Consulta de Saldo -->
+  <section id="consulta">
+    <div class="card text-center">
+      <h3 class="mb-3">Consulta tu saldo (Algorand TestNet)</h3>
+      <input type="text" id="address" class="form-control mb-3" placeholder="Dirección de Algorand">
+      <button class="btn btn-primary w-100" onclick="consultar()">Consultar</button>
+      <div id="result"></div>
+    </div>
+  </section>
+
+  <!-- Sección: Información del Usuario -->
+  <section id="info" class="mt-5">
+    <div class="card text-center">
+      <h3 class="mb-3">Información del Usuario</h3>
+      <p><strong>Nombre:</strong> Aylin Martínez Santos</p>
+      <p><strong>Usuario:</strong> AylinMtz03</p>
+      <p><strong>Mi Wallet:</strong> <span id="wallet">ALGO-TEST-ADDRESS-123456789</span></p>
+    </div>
+  </section>
+
+  <!-- Sección: Envíos -->
+  <section id="envios" class="mt-5 mb-5">
+    <div class="card text-center">
+      <h3 class="mb-3">Enviar Fondos</h3>
+      <input type="text" id="miwallet" class="form-control mb-2" placeholder="Mi Wallet (Origen)">
+      <input type="text" id="destino" class="form-control mb-2" placeholder="Wallet destino">
+      <input type="number" id="cantidad" class="form-control mb-3" placeholder="Cantidad de ALGOs">
+      <button class="btn btn-success w-100" onclick="enviarFondos()">Enviar</button>
+      <div id="mensaje" class="mt-3 fw-semibold"></div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
+    // --- Consulta de saldo ---
     async function consultar() {
       const address = document.getElementById('address').value.trim();
-      if (!address) return alert("Introduce una dirección");
+      const result = document.getElementById('result');
+      if (!address) return alert("Introduce una dirección válida.");
 
-      document.getElementById('result').innerText = "Consultando...";
+      result.innerText = "Consultando...";
 
-      const response = await fetch(`/get_balance/?address=${address}`);
-      const data = await response.json();
+      try {
+        const response = await fetch(`/get_balance/?address=${address}`);
+        const data = await response.json();
 
-      if (data.error) {
-        document.getElementById('result').innerText = "Error: " + data.error;
-      } else {
-        document.getElementById('result').innerText = 
-          `Saldo: ${data.balance} ALGOs`;
+        if (data.error) {
+          result.innerText = "Error: " + data.error;
+        } else {
+          result.innerText = `Saldo: ${data.balance} ALGOs`;
+        }
+      } catch {
+        result.innerText = "Error de conexión con el servidor.";
       }
+    }
+
+    // --- Envío de fondos (simulado) ---
+    async function enviarFondos() {
+      const origen = document.getElementById('miwallet').value.trim();
+      const destino = document.getElementById('destino').value.trim();
+      const cantidad = document.getElementById('cantidad').value.trim();
+      const mensaje = document.getElementById('mensaje');
+
+      if (!origen || !destino || !cantidad)
+        return alert("Completa todos los campos antes de enviar.");
+
+      mensaje.innerText = "Procesando envío...";
+
+      // Simulación (puedes reemplazarlo por conexión real a backend)
+      setTimeout(() => {
+        mensaje.innerText = `Fondos enviados: ${cantidad} ALGOs a ${destino}`;
+      }, 2000);
     }
   </script>
 
