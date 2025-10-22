@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta de saldo - Algorand</title>
+  <style>
+    body { 
+      font-family: Arial; 
+      background: #f0f2f5; 
+      text-align: center; 
+      margin-top: 100px;
+    }
+    .card {
+      background: white; 
+      padding: 20px; 
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: inline-block;
+      width: 300px;
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #00a3e0; 
+      color: white; 
+      border: none; 
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #007bbd;
+    }
+    #result { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Consulta tu saldo (Algorand TestNet)</h2>
+    <input type="text" id="address" placeholder="Dirección de Algorand">
+    <br>
+    <button onclick="consultar()">Consultar</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function consultar() {
+      const address = document.getElementById('address').value.trim();
+      if (!address) return alert("Introduce una dirección");
+
+      document.getElementById('result').innerText = "Consultando...";
+
+      const response = await fetch(`/get_balance/?address=${address}`);
+      const data = await response.json();
+
+      if (data.error) {
+        document.getElementById('result').innerText = "Error: " + data.error;
+      } else {
+        document.getElementById('result').innerText = 
+          `Saldo: ${data.balance} ALGOs`;
+      }
+    }
+  </script>
+
+</body>
+</html>

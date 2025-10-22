@@ -1,0 +1,9 @@
+{
+  "address": "VGOJGHIT3D4H3PXR7K77SWAFCVYG4MHXRWD4AZ6ELGN4XWVSDHU2CT4P3A",
+  "encrypted_mnemonic": {
+    "salt": "MynoaXuBon8e3CtP4JmMsQ==",
+    "nonce": "yJUYPCQSMhOeKN96",
+    "tag": "V/M+IcRa9bVrJsVKWnP1oA==",
+    "ciphertext": "sOhrk7qPxGhxBz/C1xkvJyylBPBMubfo5DAB8n/o1jfnBUchYy/nXJkGbCq2hymVdmrvvR7uF7gbH4MD1Y9e2lAVgE4zc0T+8gfMzk6alUScNjJz01uCIFFU/OR0Kpfy4JG0pAxYv54hPOkE3mPNt0GeQn34yvKdjpAEtIyLCJYAGbiilwipAVo9iSi7ihytgeQT4VQWNTUV9FfHlwTdyjMjzQ4="
+  }
+}
