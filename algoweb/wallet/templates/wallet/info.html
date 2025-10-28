@@ -1,0 +1,42 @@
+{% extends 'wallet/base.html' %}
+
+{% block title %}Información - Wallet{% endblock %}
+
+{% block content %}
+<style>
+  .card { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: inline-block;
+    width: 520px;
+    text-align: center;
+  }
+  label { display: block; margin-bottom: 8px; font-weight: bold; text-align: center; }
+  .muted { color: #6c757d; font-size: 0.95rem; text-align: center; }
+  .alert { padding: 12px; border-radius: 6px; margin-top: 12px; }
+  .alert-success { background: #d4edda; color: #155724; }
+</style>
+
+<div class="card">
+  <h3>Mis datos</h3>
+
+  <div>
+    <label>Nombre</label>
+    <div class="muted">Aylin Martinez</div>
+
+    <label>Usuario</label>
+    <div class="muted">Aylin</div>
+
+    <label>Mi Wallet</label>
+    <div class="muted">PCHHB33FPDOI7AMAFTAB665J2R43IDRWVQLRB7KORUCEPPTLHVYCALIYWY</div>
+  </div>
+
+  <div id="result" style="display:none;">
+    <div class="alert alert-success" role="alert"></div>
+  </div>
+</div>
+
+{% endblock %}
+

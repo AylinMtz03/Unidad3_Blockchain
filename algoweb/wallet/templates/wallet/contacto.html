@@ -1,0 +1,35 @@
+{% extends 'wallet/base.html' %}
+
+{% block title %}Contacto Registrados{% endblock %}
+
+{% block content %}
+    <h2>Contactos Registrados</h2>
+
+{% if contactos %}
+    <table style="border-collapse:collapse;width: 100%;">
+        <thead>
+            <tr style="background:#f1f1f1; text-align:left;">
+                <th style="padding:8px;border:1px solid #ddd;">Nombre</th>
+                <th style="padding:8px;border:1px solid #ddd;">Correo</th>
+                <th style="padding:8px;border:1px solid #ddd;">Wallet</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for c in contactos %}
+            <tr>
+                <td style="padding:8px;border:1px solid #ddd;">{{ c.nombre }}</td>
+                <td style="padding:8px;border:1px solid #ddd;">{{ c.email }}</td>
+                    <td style="padding:8px;border:1px solid #ddd;">{{ c.contact_wallet|default:'-' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No tienes contactos registrados.</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'agregar_contacto' %}" style="display:inline-block;padding:8px 12px;background:#00a3e0;color:#fff;border-radius:6px;text-decoration:none;">Agregar Contacto</a>
+</p>
+
+{% endblock %}

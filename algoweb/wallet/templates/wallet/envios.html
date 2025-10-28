@@ -1,34 +1,76 @@
 {% extends 'wallet/base.html' %}
 
-{% block title %}Mi Wallet{% endblock %}
+{% block title %}Enviar fondos{% endblock %}
 
 {% block content %}
+<style>
+	.card-large {
+		background: white; 
+		padding: 20px; 
+		border-radius: 10px;
+		box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+		display: inline-block;
+		width: 720px;
+		text-align: left;
+	}
+	.card-large input, .card-large select, .card-large textarea { width:100%; padding:8px; margin:6px 0 12px 0; border-radius:5px; border:1px solid #ccc }
+	.muted { color: #6c757d; font-size: 0.9rem; }
+	.alert { padding: 12px; border-radius: 6px; margin-top: 12px; }
+	.alert-success { background: #d4edda; color: #155724; }
+	.alert-error { background: #f8d7da; color: #721c24; }
+</style>
 
-  <div class="card">
-    <h2>Consulta tu saldo (Algorand TestNet)</h2>
-    <input type="text" id="address" placeholder="Dirección de Algorand">
-    <br>
-    <button onclick="consultar()">Consultar</button>
-    <div id="result"></div>
-  </div>
+<div class="card-large">
+	<h3>Enviar fondos</h3>
 
-  <script>
-    async function consultar() {
-      const address = document.getElementById('address').value.trim();
-      if (!address) return alert("Introduce una dirección");
+	<form id="sendForm" novalidate>
+		<label for="miWallet">Mi Wallet (origen)</label>
+		<input type="text" id="miWallet" name="miWallet" placeholder="Tu dirección de wallet (p. ej. 0x...)" required>
 
-      document.getElementById('result').innerText = "Consultando...";
+		<label for="destino">Cartera a enviar (destino)</label>
+		<input type="text" id="destino" name="destino" placeholder="Dirección destino (p. ej. 0x...)" required>
 
-      const response = await fetch(`/get_balance/?address=${address}`);
-      const data = await response.json();
+		<label for="monto">Monto a enviar</label>
+		<input type="number" step="any" id="monto" name="monto" placeholder="Cantidad en ALGOs" required>
 
-      if (data.error) {
-        document.getElementById('result').innerText = "Error: " + data.error;
-      } else {
-        document.getElementById('result').innerText = 
-          `Saldo: ${data.balance} ALGOs`;
-      }
-    }
-  </script>
+		<div style="margin-top:12px; text-align:right;">
+			<button type="submit">Enviar</button>
+		</div>
+	</form>
+
+	<div id="sendResult" style="display:none;">
+		<div class="alert" role="alert"></div>
+	</div>
+</div>
+
+<script>
+	(function () {
+		const form = document.getElementById('sendForm');
+		const result = document.getElementById('sendResult');
+		const alertBox = result.querySelector('.alert');
+
+		form.addEventListener('submit', function (e) {
+			e.preventDefault();
+
+			const miWallet = document.getElementById('miWallet').value.trim();
+			const destino = document.getElementById('destino').value.trim();
+			const monto = document.getElementById('monto').value.trim();
+
+			if (!miWallet || !destino || !monto) {
+				alertBox.className = 'alert alert-error';
+				alertBox.textContent = 'Por favor completa todos los campos.';
+				result.style.display = 'block';
+				return;
+			}
+
+			// Simulación de envío: en producción llamar a la vista/endpoint correspondiente
+			alertBox.className = 'alert alert-success';
+			alertBox.textContent = `Enviado ${monto} desde ${miWallet} hacia ${destino} (simulado).`;
+			result.style.display = 'block';
+		});
+	})();
+</script>
 
 {% endblock %}
+ 
+

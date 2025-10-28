@@ -1,0 +1,81 @@
+{% extends 'wallet/base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header text-white bg-primary">
+            <h2 class="mb-0 text-center">Contactos</h2>
+        </div>
+        <div class="card-body">
+
+            {% if errors %}
+            <div class="alert alert-danger" role="alert">
+                <ul class="mb-0">
+                    {% for e in errors %}
+                    <li>{{ e }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_name" class="form-label fw-bold">Nombre</label>
+                    <input id="id_name" name="name" type="text" 
+                           class="form-control border-primary shadow-sm" 
+                           placeholder="Ej. Juan Pérez" 
+                           value="{% if form %}{{ form.name }}{% endif %}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_address" class="form-label fw-bold">Dirección</label>
+                    <input id="id_address" name="address" type="text" 
+                           class="form-control border-primary shadow-sm" 
+                           placeholder="Ej. 0x123abc..." 
+                           value="{% if form %}{{ form.address }}{% endif %}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_note" class="form-label fw-bold">Nota</label>
+                    <textarea id="id_note" name="note" 
+                              class="form-control border-primary shadow-sm" 
+                              rows="3" 
+                              placeholder="Agrega una nota sobre este contacto">{% if form %}{{ form.note }}{% endif %}</textarea>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                        ➕ Agregar contacto
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-light text-primary fw-bold">
+            Lista de Contactos
+        </div>
+        <div class="card-body">
+            {% if contacts and contacts.count > 0 %}
+                <ul class="list-group list-group-flush">
+                    {% for c in contacts %}
+                    <li class="list-group-item">
+                        <h5 class="text-primary mb-1">{{ c.name }}</h5>
+                        <p class="mb-0"><strong>Dirección:</strong> {{ c.address }}</p>
+                        {% if c.note %}
+                        <small class="text-muted">{{ c.note }}</small>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted text-center">No hay contactos aún.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

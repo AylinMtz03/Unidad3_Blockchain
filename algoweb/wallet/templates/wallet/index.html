@@ -1,0 +1,47 @@
+{% extends 'wallet/base.html' %}
+
+{% block title %}Consulta de saldo - Algorand{% endblock %}
+
+{% block content %}
+<style>
+  .card-small { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: inline-block;
+    width: 300px;
+    text-align: center;
+  }
+  .card-small input { width: 90%; padding: 8px; margin: 10px 0; border-radius:5px; border:1px solid #ccc }
+  .card-small button { background: #00a3e0; color: #fff; border:none; padding:8px 14px; border-radius:5px }
+  #result { margin-top: 20px; font-size: 18px; }
+</style>
+
+<div class="card-small">
+  <h2>Consulta tu saldo (Algorand TestNet)</h2>
+  <input type="text" id="address" placeholder="Dirección de Algorand">
+  <br>
+  <button onclick="consultar()">Consultar</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  async function consultar() {
+    const address = document.getElementById('address').value.trim();
+    if (!address) return alert("Introduce una dirección");
+
+    document.getElementById('result').innerText = "Consultando...";
+
+    const response = await fetch(`/get_balance/?address=${address}`);
+    const data = await response.json();
+
+    if (data.error) {
+      document.getElementById('result').innerText = "Error: " + data.error;
+    } else {
+      document.getElementById('result').innerText = `Saldo: ${data.balance} ALGOs`;
+    }
+  }
+</script>
+
+{% endblock %}
